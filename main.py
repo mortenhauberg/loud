@@ -14,7 +14,7 @@ price_per_week = price_per_month / 4
 cost_tally = 0
 
 now = datetime.now()
-start = datetime(2019, 11, 1)
+start = datetime(2019, 11, 1) # LOUD started to get funding from November 1st 2019
 
 data = {
 	'audience': [],
