@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kæmpe hey 👯</title>
+    <style>
+        body {
+            color: #263646;
+            background: #fdfdfd;
+            padding: 60px;
+        }
+
+        .chart {
+            box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .2);
+            transition: box-shadow .3s;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="chart" class="chart" height="100"></canvas>
+
+    <canvas id="audience" height="100"></canvas>
+    <canvas id="pricePerAudience" height="100"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        (async function () {
+            const convertDate = function (d) {
+                d.date = new Date(d.date).toLocaleDateString()
+                return d
+            }
+            const getData = async function () {
+                const url = 'https://gist.githubusercontent.com/mortenhauberg/0244ed3d7d7373a8be854178628ceb1d/raw/loud.json?x=' + new Date().getTime()
+                const data = await fetch(url).then(response => response.json())
+                return data
+            }
+
+            const data = await getData()
+            const audience = data.audience.map(convertDate)
+            const cost = data.cost.map(convertDate)
+
+            const chart = new Chart(document.getElementById('chart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: audience.map(function (d) { return d.date; }),
+                    datasets: [
+                        {
+                            label: 'Lyttere',
+                            yAxisID: 'A',
+                            data: audience.map(function (d) { return d.weekly_audience }),
+                            borderWidth: 1,
+                            backgroundColor: ['#e8505b']
+                        },
+                        {
+                            label: 'Pris pr lytter',
+                            yAxisID: 'B',
+                            data: audience.map(function (d) { return d.price_per_audience }),
+                            borderWidth: 1,
+                            backgroundColor: ['#f9d56e']
+                        }
+                    ],
+                },
+                options: {
+                    tooltips: {
+                        backgroundColor: '#fdfdfd',
+                        bodyFontColor: '#263646',
+                        titleFontColor: '#263646',
+                        displayColors: false,
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                return data.datasets[tooltipItem.datasetIndex].label + ': ' + tooltipItem.yLabel.toLocaleString('da-DK');
+                            }
+                        },
+                    },
+                    scales: {
+                        yAxes: [
+                            {
+                                id: 'A',
+                                type: 'linear',
+                                position: 'left',
+                                ticks: {
+                                    callback: function (value) {
+                                        return value.toLocaleString('da-DK')
+                                    }
+                                }
+                            },
+                            {
+                                id: 'B',
+                                type: 'linear',
+                                position: 'right',
+                                ticks: {
+                                    callback: function (value) {
+                                        return value.toLocaleString('da-DK')
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        })()
+    </script>
+</body>
+
+</html>
