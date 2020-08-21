@@ -46,7 +46,7 @@ def store_data(data):
 		'Accept': 'application/vnd.github.v3+json',
 	}
 	r = requests.patch('https://api.github.com/gists/{}'.format(gist_id), json=payload, headers=headers)
-	print('Status code: ' + r.status_code)
+	print('Status code', r.status_code)
 	print('Response', r.json())
 	return r.status_code
 
