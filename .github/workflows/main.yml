@@ -3,6 +3,9 @@
 name: Fetch data
 
 on:
+  push:
+    branches:
+      - master
   schedule:
   - cron: "40 * * * *"
 
