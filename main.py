@@ -7,8 +7,7 @@ import os
 
 gist_id = os.getenv('GIST_ID')
 github_token = os.getenv('GH_TOKEN')
-print('First 3 of gist id is ' + gist_id[0:3])
-print('First 3 chars of the token is ' + github_token[0:3])
+
 yearly_price = 60000000
 years = 4
 total_price = yearly_price * years
@@ -47,6 +46,8 @@ def store_data(data):
 		'Accept': 'application/vnd.github.v3+json',
 	}
 	r = requests.patch('https://api.github.com/gists/{}'.format(gist_id), json=payload, headers=headers)
+	print('Status code: ' + r.status_code)
+	print('Response', r.json())
 	return r.status_code
 
 
