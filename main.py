@@ -7,7 +7,7 @@ import os
 
 gist_id = os.getenv('GIST_ID')
 github_token = os.getenv('GH_TOKEN')
-print('My gist id is ' + gist_id)
+print('First 3 of gist id is ' + gist_id[0:3])
 print('First 3 chars of the token is ' + github_token[0:3])
 yearly_price = 60000000
 years = 4
