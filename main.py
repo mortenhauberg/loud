@@ -6,6 +6,7 @@ import json
 import os
 
 gist_id = os.getenv('GIST_ID')
+print('My gist id is ', gist_id)
 github_token = os.getenv('GH_TOKEN')
 yearly_price = 60000000
 years = 4
