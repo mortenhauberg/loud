@@ -7,7 +7,9 @@ import os
 
 gist_id = os.getenv('GIST_ID')
 github_token = os.getenv('GH_TOKEN')
-total_price = 280000000
+yearly_price = 60000000
+years = 4
+total_price = yearly_price * years
 price_per_year = total_price / 4
 price_per_month = price_per_year / 12
 price_per_week = price_per_month / 4
