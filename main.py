@@ -90,3 +90,5 @@ for dt in rrule.rrule(rrule.WEEKLY, dtstart=start, until=now):
 				'price_per_audience': price,
 			})
 			continue
+
+store_data(data)
