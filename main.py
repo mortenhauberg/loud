@@ -13,6 +13,10 @@ total_price = yearly_price * years
 price_per_year = total_price / 4
 price_per_month = price_per_year / 12
 price_per_week = price_per_month / 4
+price_per_day = price_per_week / 7
+price_per_hour = price_per_day / 24
+price_per_minute = price_per_hour / 60
+price_per_second = price_per_minute / 60
 cost_tally = 0
 
 now = datetime.now()
@@ -22,6 +26,7 @@ data = {
 	'audience': [],
 	'cost': [],
 	'total_cost_so_far': rrule.rrule(rrule.WEEKLY, dtstart=start, until=now).count() * price_per_week,
+	'price_per_hour': price_per_hour,
 }
 
 def store_data(data):

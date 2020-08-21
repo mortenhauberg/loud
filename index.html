@@ -24,11 +24,22 @@
 <body>
     <canvas id="chart" class="chart" height="100"></canvas>
 
-    <canvas id="audience" height="100"></canvas>
-    <canvas id="pricePerAudience" height="100"></canvas>
+    <div class="text">
+        Radio LOUD koster den danske stat <bold id="pricePerHour"></bold> i timen.
+    </div>
+    <div class="text">
+        Det betyder at der siden den 1. november 2019 er brugt <bold id="costSoFar"></bold> i et stort sort hul
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
         (async function () {
+            const getHoursSinceStart = function(){
+                const start = new Date(2019, 11, 1)
+                const now = new Date()
+
+                return Math.abs(firstDate - secondDate) / 36e5;
+            }
+
             const convertDate = function (d) {
                 d.date = new Date(d.date).toLocaleDateString()
                 return d
@@ -42,6 +53,11 @@
             const data = await getData()
             const audience = data.audience.map(convertDate)
             const cost = data.cost.map(convertDate)
+            const pricePerHour = document.querySelector('#pricePerHour')
+            const costSoFar = document.querySelector('#costSoFar')
+
+            pricePerHour.innerHTML = data.price_per_hour
+            costSoFar.innerHTML = data.price_per_hour * getHoursSinceStart()
 
             const chart = new Chart(document.getElementById('chart').getContext('2d'), {
                 type: 'line',
