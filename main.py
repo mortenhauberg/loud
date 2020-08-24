@@ -20,6 +20,11 @@ price_per_minute = price_per_hour / 60
 price_per_second = price_per_minute / 60
 cost_tally = 0
 
+tax_rate = 0.5
+tax_rate_source = 'https://cepos.dk/abcepos-artikler/0246-en-almindelig-dansker-betaler-ca-50-pct-af-sin-loen-i-skatter-og-afgifter/'
+average_income = 326048
+average_income_source = 'https://www.dst.dk/da/Statistik/Publikationer/gennemsnitsdanskeren'
+
 now = datetime.now()
 start = datetime(2019, 11, 1) # LOUD started to get funding from November 1st 2019
 
@@ -28,6 +33,14 @@ data = {
 	'cost': [],
 	'total_cost_so_far': rrule.rrule(rrule.WEEKLY, dtstart=start, until=now).count() * price_per_week,
 	'price_per_hour': price_per_hour,
+	'tax': {
+		'rate': tax_rate,
+		'source': tax_rate_source,
+	},
+	'income': {
+		'average': average_income,
+		'source': average_income_source,
+	},
 }
 
 def store_data(data):

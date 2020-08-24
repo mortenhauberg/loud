@@ -9,26 +9,35 @@
     <style>
         body {
             color: #263646;
-            background: #fdfdfd;
+            background: #f2f2f2;
             padding: 60px;
         }
 
-        .chart {
+        #chart {
             box-shadow: 0 10px 40px -10px rgba(0, 64, 128, .2);
             transition: box-shadow .3s;
-            padding: 20px;
+            padding: 30px;
+        }
+
+        .box {
+            background-color: #f4f4f4;
+            margin-bottom: 40px;
+        }
+
+        .bold {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <canvas id="chart" class="chart" height="100"></canvas>
+    <canvas id="chart" class="box"></canvas>
 
-    <div class="text">
-        Radio LOUD koster den danske stat <bold id="pricePerHour"></bold> i timen.
+    <div class="text box">
+        Radio LOUD koster den danske stat <span id="pricePerHour" class="bold"></span> i timen.
     </div>
-    <div class="text">
-        Det betyder at der siden den 1. november 2019 er brugt <bold id="costSoFar"></bold> i et stort sort hul
+    <div class="text box">
+        Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>.
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
@@ -39,7 +48,9 @@
 
                 return Math.abs(start - now) / 36e5;
             }
-
+            const toCurrency = function(input){
+                return input.toLocaleString('da-DK', { style: 'currency', currency: 'DKK' })
+            }
             const convertDate = function (d) {
                 d.date = new Date(d.date).toLocaleDateString()
                 return d
@@ -56,8 +67,8 @@
             const pricePerHour = document.querySelector('#pricePerHour')
             const costSoFar = document.querySelector('#costSoFar')
 
-            pricePerHour.innerHTML = data.price_per_hour
-            costSoFar.innerHTML = data.price_per_hour * getHoursSinceStart()
+            pricePerHour.innerHTML = toCurrency(data.price_per_hour)
+            costSoFar.innerHTML = toCurrency(data.price_per_hour * getHoursSinceStart())
 
             const chart = new Chart(document.getElementById('chart').getContext('2d'), {
                 type: 'line',
