@@ -29,6 +29,14 @@
         .bold {
             font-weight: 900;
         }
+
+        #disclaimer {
+            color: #318fb5;
+            font-style: italic;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 150px;
+        }
     </style>
 </head>
 
@@ -42,9 +50,15 @@
         Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>
     </div>
     <div class="text box">
-        <p>En gennemsnitlig indkomst er <a href="" id="avgIncomeSource" target="_blank"><span id="avgIncome" class="bold"></span></a> om året.</p>
+        <p>En gennemsnitlig årsindkomst er <a href="" id="avgIncomeSource" target="_blank"><span id="avgIncome" class="bold"></span></a> om året.</p>
         <p>Af det er der <a href="" id="avgTaxSource" target="_blank"><span id="avgTax" class="bold"></span></a> til SKAT.</p>
+        <p>Det giver <span id="avgIncomeHourly" class="bold"></span> i timen hvis vi antager at der arbejdes 140 timer i måneden.</p>
+        <p>Der skal altså arbejde <span id="peopleWorking" class="bold"></span> mennesker døgnet rundt for at betale for Radio LOUD.</p>
     </div>
+    <div class="text box">
+        1 liter mælk koster cirka <span id="milkPrice" class="bold"></span> Vi kan altså få cirka <span id="howMuchMilk" class="bold"></span> liter mælk for hvad Radio LOUD har kostet indtil videre.
+    </div>
+    <div id="disclaimer">Alle tal er cirka tal. Fundet en fejl? Send en mail på <a href="mailto:morten@hauberg-lund.com">morten@hauberg-lund.com</a></div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
         (async function () {
@@ -73,16 +87,29 @@
             const pricePerHour = document.querySelector('#pricePerHour')
             const costSoFar = document.querySelector('#costSoFar')
             const avgIncome = document.querySelector('#avgIncome')
+            const avgIncomeHourly = document.querySelector('#avgIncomeHourly')
             const avgIncomeSource = document.querySelector('#avgIncomeSource')
             const avgTax = document.querySelector('#avgTax')
             const avgTaxSource = document.querySelector('#avgTaxSource')
+            const peopleWorking = document.querySelector('#peopleWorking')
+            const milkPrice = document.querySelector('#milkPrice')
+            const howMuchMilk = document.querySelector('#howMuchMilk')
+            const milk = document.querySelector('#milk')
 
             pricePerHour.innerHTML = toCurrency(data.price_per_hour)
             costSoFar.innerHTML = toCurrency(data.price_per_hour * getHoursSinceStart())
             avgIncome.innerHTML = toCurrency(data.income.average)
+            avgIncomeHourly.innerHTML = toCurrency(data.tax.rate * data.income.hourly)
             avgIncomeSource.href = data.income.source
             avgTax.innerHTML = toCurrency(data.tax.rate * data.income.average)
             avgTaxSource.href = data.tax.source
+            peopleWorking.innerHTML = Number(data.price_per_hour / (data.tax.rate * data.income.hourly)).toLocaleString('da-DK')
+
+            const milkPrice_ = 8.5
+            const milkAmount = data.price_per_hour * getHoursSinceStart() / milkPrice_ / milkPrice_
+
+            milkPrice.innerHTML = toCurrency(milkPrice_)
+            howMuchMilk.innerHTML = Number(milkAmount).toLocaleString('da-DK')
 
             const chart = new Chart(document.getElementById('chart').getContext('2d'), {
                 type: 'line',
