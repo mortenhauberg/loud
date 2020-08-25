@@ -5,12 +5,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <title>Kæmpe hey 👯</title>
     <style>
         body {
             color: #263646;
             background: #f2f2f2;
             padding: 60px;
+            font-family: 'Source Sans Pro', sans-serif;
         }
 
         #chart {
@@ -21,11 +23,11 @@
 
         .box {
             background-color: #f4f4f4;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .bold {
-            font-weight: bold;
+            font-weight: 900;
         }
     </style>
 </head>
@@ -34,10 +36,14 @@
     <canvas id="chart" class="box"></canvas>
 
     <div class="text box">
-        Radio LOUD koster den danske stat <span id="pricePerHour" class="bold"></span> i timen.
+        Radio LOUD koster den danske stat <span id="pricePerHour" class="bold"></span> i timen døgnet rundt.
     </div>
     <div class="text box">
-        Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>.
+        Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>
+    </div>
+    <div class="text box">
+        <p>En gennemsnitlig indkomst er <a href="" id="avgIncomeSource" target="_blank"><span id="avgIncome" class="bold"></span></a> om året.</p>
+        <p>Af det er der <a href="" id="avgTaxSource" target="_blank"><span id="avgTax" class="bold"></span></a> til SKAT.</p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
@@ -66,9 +72,17 @@
             const cost = data.cost.map(convertDate)
             const pricePerHour = document.querySelector('#pricePerHour')
             const costSoFar = document.querySelector('#costSoFar')
+            const avgIncome = document.querySelector('#avgIncome')
+            const avgIncomeSource = document.querySelector('#avgIncomeSource')
+            const avgTax = document.querySelector('#avgTax')
+            const avgTaxSource = document.querySelector('#avgTaxSource')
 
             pricePerHour.innerHTML = toCurrency(data.price_per_hour)
             costSoFar.innerHTML = toCurrency(data.price_per_hour * getHoursSinceStart())
+            avgIncome.innerHTML = toCurrency(data.income.average)
+            avgIncomeSource.href = data.income.source
+            avgTax.innerHTML = toCurrency(data.tax.rate * data.income.average)
+            avgTaxSource.href = data.tax.source
 
             const chart = new Chart(document.getElementById('chart').getContext('2d'), {
                 type: 'line',

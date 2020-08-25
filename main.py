@@ -24,6 +24,9 @@ tax_rate = 0.5
 tax_rate_source = 'https://cepos.dk/abcepos-artikler/0246-en-almindelig-dansker-betaler-ca-50-pct-af-sin-loen-i-skatter-og-afgifter/'
 average_income = 326048
 average_income_source = 'https://www.dst.dk/da/Statistik/Publikationer/gennemsnitsdanskeren'
+average_income_per_month = average_income / 12
+average_hours_in_month = 140
+average_income_per_hour = average_income_per_month / average_hours_in_month
 
 now = datetime.now()
 start = datetime(2019, 11, 1) # LOUD started to get funding from November 1st 2019
@@ -40,6 +43,7 @@ data = {
 	'income': {
 		'average': average_income,
 		'source': average_income_source,
+		'hourly': average_income_per_hour
 	},
 }
 
