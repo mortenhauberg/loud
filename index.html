@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta content="width=600" name="viewport">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <title>Kæmpe hey 👯</title>
     <style>
@@ -13,6 +13,10 @@
             background: #f2f2f2;
             padding: 60px;
             font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #container {
+            position: relative;
         }
 
         #chart {
@@ -46,31 +50,35 @@
 </head>
 
 <body>
-    <canvas id="chart" class="box" height="70"></canvas>
+    <div id="container">
+        <canvas id="chart" class="box" height="100"></canvas>
 
-    <div class="text box">
-        Radio LOUD koster den danske stat <span id="pricePerHour" class="bold"></span> i timen døgnet rundt.
+        <div class="text box">
+            Radio LOUD koster den danske stat <span id="pricePerHour" class="bold"></span> i timen døgnet rundt.
+        </div>
+        <div class="text box">
+            Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>
+        </div>
+        <div class="text box">
+            <p>En gennemsnitlig årsindkomst er <a href="" id="avgIncomeSource" target="_blank"><span id="avgIncome"
+                        class="bold"></span></a></p>
+            <p>Af det er der <a href="" id="avgTaxSource" target="_blank"><span id="avgTax" class="bold"></span></a> til
+                SKAT.</p>
+            <p>Det giver <span id="avgIncomeHourly" class="bold"></span> i timen hvis vi antager at der arbejdes 140 timer i
+                måneden.</p>
+            <p>Der skal altså arbejde <span id="peopleWorking" class="bold"></span> mennesker døgnet rundt for at betale for
+                Radio LOUD.</p>
+        </div>
+        <div class="text box">
+            1 liter mælk koster cirka <span id="milkPrice" class="bold"></span> Vi kan altså få cirka <span id="howMuchMilk"
+                class="bold"></span> liter mælk for hvad Radio LOUD har kostet indtil videre.
+        </div>
+
+
+        <div id="disclaimer">Alle tal er cirka tal. Fundet en fejl? Send en mail på <a href="mailto:morten@hauberg-lund.com">morten@hauberg-lund.com</a></div>
+        <div id="gh"><a href="https://github.com/mortenhauberg/loud" target="_blank"><img src="GH.png"></a></div>
     </div>
-    <div class="text box">
-        Det betyder at der siden den 1. november 2019 er brugt <span id="costSoFar" class="bold"></span>
-    </div>
-    <div class="text box">
-        <p>En gennemsnitlig årsindkomst er <a href="" id="avgIncomeSource" target="_blank"><span id="avgIncome"
-                    class="bold"></span></a></p>
-        <p>Af det er der <a href="" id="avgTaxSource" target="_blank"><span id="avgTax" class="bold"></span></a> til
-            SKAT.</p>
-        <p>Det giver <span id="avgIncomeHourly" class="bold"></span> i timen hvis vi antager at der arbejdes 140 timer i
-            måneden.</p>
-        <p>Der skal altså arbejde <span id="peopleWorking" class="bold"></span> mennesker døgnet rundt for at betale for
-            Radio LOUD.</p>
-    </div>
-    <div class="text box">
-        1 liter mælk koster cirka <span id="milkPrice" class="bold"></span> Vi kan altså få cirka <span id="howMuchMilk"
-            class="bold"></span> liter mælk for hvad Radio LOUD har kostet indtil videre.
-    </div>
-    <div id="disclaimer">Alle tal er cirka tal. Fundet en fejl? Send en mail på <a
-            href="mailto:morten@hauberg-lund.com">morten@hauberg-lund.com</a></div>
-    <div id="gh"><a href="https://github.com/mortenhauberg/loud" target="_blank"><img src="GH.png"></a></div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
         (async function () {
