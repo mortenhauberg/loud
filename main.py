@@ -77,7 +77,7 @@ for dt in rrule.rrule(rrule.WEEKLY, dtstart=start, until=now):
 	})
 	
 	weekly_coverage = 0
-	target_name = 'Radio Loud'
+	target_names = ['Radio Loud', '24syv']
 	url = 'http://tvm.tns-gallup.dk/tvm/rpm/{}/rpm{}{}.htm'.format(dt.year, str(dt.year)[:2], dt.isocalendar()[1])
 	response = requests.get(url)
 
@@ -93,7 +93,7 @@ for dt in rrule.rrule(rrule.WEEKLY, dtstart=start, until=now):
 		if not name_cell:
 			continue
 
-		if name_cell[0].text == target_name:
+		if name_cell[0].text in target_names:
 			cells = row.findChildren('td', class_='right')
 			weekly_audience = (float(cells[0].text.replace(',', '.')) * 1000) + (float(cells[1].text.replace(',', '.')) * 1000)
 			price = price_per_week
