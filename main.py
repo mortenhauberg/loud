@@ -84,6 +84,8 @@ for dt in rrule.rrule(rrule.WEEKLY, dtstart=start, until=now):
 	url = 'http://tvm.tns-gallup.dk/tvm/rpm/{}/rpm{}{}.htm'.format(full_year, short_year, calendar_week)
 	response = requests.get(url)
 
+	print('Fetching', url)
+
 	if response.status_code != 200:
 		continue
 
