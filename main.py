@@ -78,7 +78,10 @@ for dt in rrule.rrule(rrule.WEEKLY, dtstart=start, until=now):
 	
 	weekly_coverage = 0
 	target_names = ['Radio Loud', '24syv']
-	url = 'http://tvm.tns-gallup.dk/tvm/rpm/{}/rpm{}{}.htm'.format(dt.year, str(dt.year)[:2], dt.isocalendar()[1])
+	full_year = dt.strftime('%Y')
+	short_year = dt.strftime('%y')
+	calendar_week = dt.strftime('%W')
+	url = 'http://tvm.tns-gallup.dk/tvm/rpm/{}/rpm{}{}.htm'.format(full_year, short_year, calendar_week)
 	response = requests.get(url)
 
 	if response.status_code != 200:
